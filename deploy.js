@@ -10,6 +10,20 @@ async function main() {
   // here we get a Wallet so we can sign transactions
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
 
+  // BEGIN OF USE THE ENCRYPTED PRIVATE KEY 
+
+  //WITH OUR ENCRYPTED KEY we're going to change the things a little bit
+  // const encryptedJson = fs.readFileSync('./.encryptedKey.json', 'utf8')
+  
+  // we're using 'let' now for the wallet because after the line below, we'll have to connect 
+  // the wallet to the provider
+  // let wallet = new ethers.Wallet.fromEncryptedJsonSync(encryptedJson, process.env.PRIVATE_KEY_PASSWORD)
+
+  // connecting the wallet to the provider 
+  // wallet = await wallet.connect(provider)
+  
+  // END OF USE OF A ENCRYPTED KEY 
+
   // we're reading the contract ABI
   const abi = fs.readFileSync("./SimpleStorage_sol_SimpleStorage.abi", "utf8")
 
@@ -25,6 +39,8 @@ async function main() {
   const contract = await contractFactory.deploy()
   // const transactionReceipt = await contract.deployTransaction.wait(1)
   await contract.deployTransaction.wait(1)
+  console.log(`Contract address: ${contract.address}`)
+
   // console.log("Here is the deployment transaction (transaction response): ")
   // console.log(contract.deployTransaction)
   // we only get a transaction receipt when we WAIT for at least ONE block confirmation

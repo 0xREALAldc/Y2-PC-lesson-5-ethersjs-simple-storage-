@@ -7,6 +7,7 @@ async function main() {
   const encryptedJsonKey = await wallet.encrypt(process.env.PRIVATE_KEY_PASSWORD, process.env.PRIVATE_KEY)
 
   console.log(encryptedJsonKey)
+  fs.writeFileSync('./.encryptedKey.json', encryptedJsonKey)
 }
 
 main()
